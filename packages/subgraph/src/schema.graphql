@@ -1,0 +1,15 @@
+type PublicSaleMint @entity {
+  id: ID!
+  sender: Sender!
+  numberOfTokens: BigInt!
+  createdAt: BigInt!
+  transactionHash: String!
+}
+
+type Sender @entity {
+  id: ID!
+  address: Bytes!
+  numberOfTokens: [PublicSaleMint!] @derivedFrom(field: "sender")
+  createdAt: BigInt!
+  publicSaleMintCount: BigInt!
+}

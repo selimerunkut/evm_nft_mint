@@ -1,0 +1,25 @@
+specVersion: 0.0.2
+schema:
+  file: ./src/schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: YourCollectible
+    network: localhost
+    source:
+      address: "{{YourCollectibleAddress}}"
+      abi: YourCollectible
+      startBlock: 1
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - PublicSaleMint
+        - Sender
+      abis:
+        - name: YourCollectible
+          file: ./abis/localhost_YourCollectible.json
+      eventHandlers:
+        - event: publicSaleMintEvent(uint256,string)
+          handler: handlePublicSaleMint
+      file: ./src/mapping.ts

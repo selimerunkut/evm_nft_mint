@@ -1,0 +1,22 @@
+// deploy/00_deploy_your_contract.js
+const {parseEther} = require('ethers/lib/utils');
+
+
+module.exports = async ({ getNamedAccounts, deployments }) => {
+  const { deploy } = deployments;
+  const { deployer } = await getNamedAccounts();
+  await deploy("YourCollectible", {
+    from: deployer,
+    args: ["Portal Collectible NFT", "PCN", "https://ipfs.io/ipfs/"],
+    log: true,
+  });
+
+
+    // Getting a previously deployed contract
+    const YourCollectible = await ethers.getContract("YourCollectible", deployer);
+    await YourCollectible.setMintPrice(parseEther("0.001"));
+    await YourCollectible.setRoyalties("0x5f0eD8a432e4472936a889A0e1F97cb8e63dAAD9", 250);
+    await YourCollectible.setMintFundsReceiver("0x5f0eD8a432e4472936a889A0e1F97cb8e63dAAD9");
+    
+};
+module.exports.tags = ["YourCollectible"];
